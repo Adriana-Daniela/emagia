@@ -4,20 +4,37 @@ declare(strict_types=1);
 namespace Adriana\Emagia\Domain\Model\Skill;
 
 use Adriana\Emagia\Domain\Model\Player\AbstractCharacter;
-use Adriana\Emagia\Domain\Model\Result\GameTurnResult;
+use Adriana\Emagia\Domain\Model\Result\AttackResult;
 
 class StrikeSkill extends AbstractSkill implements AttackSkillInterface
 {
     protected int $usageProbability = 100;
 
-    public function trigger(AbstractCharacter $attacker, AbstractCharacter $defender, int $damage, GameTurnResult $gameTurnResult): int
+    public function trigger(AbstractCharacter $attacker, AbstractCharacter $defender): AttackResult
     {
         if ($this->attackFails($defender)) {
             // no damage if lucky
-            return 0;
+            return (new AttackResult())
+                ->setDamage(0)
+                ->setNote(sprintf(
+                    '%s attacked %s with %s, but defendant was lucky and no damage was caused!',
+                    $attacker->getName(),
+                    $defender->getName(),
+                    $this->__toString(),
+                ));
         }
 
-        return $this->calculateDamage($attacker, $defender);
+        $damage = $this->calculateDamage($attacker, $defender);
+
+        return (new AttackResult())
+            ->setDamage($damage)
+            ->setNote(sprintf(
+                '%s attacked %s with %s and caused %d damage',
+                $attacker->getName(),
+                $defender->getName(),
+                $this->__toString(),
+                $damage
+            ));
     }
 
     /**

@@ -30,11 +30,13 @@ abstract class AbstractCharacter implements CharacterStatsInterface
                 continue;
             }
 
-            $damage = $attackSkill->trigger($this, $defender, 0, $gameTurnResult);
+            $attackResult = $attackSkill->trigger($this, $defender);
 
-            $gameTurnResult->addUsedSkill($attackSkill);
+            $gameTurnResult->addNote($attackResult->getNote());
 
-            $defender->defend($this, $damage, $gameTurnResult);
+            if ($attackResult->getDamage() > 0) {
+                $defender->defend($this, $attackResult->getDamage(), $gameTurnResult);
+            }
         }
     }
 
@@ -45,12 +47,14 @@ abstract class AbstractCharacter implements CharacterStatsInterface
                 continue;
             }
 
-            $damage = $defenceSkill->trigger($attacker, $this, $damage, $gameTurnResult);
+            $defenceResult = $defenceSkill->trigger($attacker, $this, $damage);
 
-            $gameTurnResult->addUsedSkill($defenceSkill);
+            $damage = $defenceResult->getDamage();
+            $gameTurnResult->addNote($defenceResult->getNote());
         }
 
         $this->setHealth($this->getHealth() - $damage);
+
         $gameTurnResult->addDamage($damage);
 
         return $damage;

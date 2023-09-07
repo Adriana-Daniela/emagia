@@ -3,20 +3,15 @@ declare(strict_types=1);
 
 namespace Adriana\Emagia\Domain\Model\Result;
 
-use Adriana\Emagia\Domain\Model\Skill\SkillInterface;
-
 class GameTurnResult
 {
     private int $turnNumber;
     private string $attacker;
     private string $defender;
-    /**
-     * @var array<SkillInterface>
-     */
-    private array $usedSkills = [];
     private int $damage = 0;
     private int $defenderHealthBefore;
     private int $defenderHealthAfter;
+    private array $notes = [];
 
     /**
      * @param int $turnNumber
@@ -52,23 +47,23 @@ class GameTurnResult
     }
 
     /**
-     * @param SkillInterface $usedSkill
-     * @return GameTurnResult
-     */
-    public function addUsedSkill(SkillInterface $usedSkill): GameTurnResult
-    {
-        $this->usedSkills[] = $usedSkill;
-
-        return $this;
-    }
-
-    /**
      * @param int $damage
      * @return GameTurnResult
      */
     public function addDamage(int $damage): GameTurnResult
     {
         $this->damage += $damage;
+
+        return $this;
+    }
+
+    /**
+     * @param string $note
+     * @return GameTurnResult
+     */
+    public function addNote(string $note): GameTurnResult
+    {
+        $this->notes[] = $note;
 
         return $this;
     }
@@ -98,7 +93,7 @@ class GameTurnResult
     public function __toString(): string
     {
         return sprintf(
-            '%d: %s attacked %s with damage %d, %s\'s health lowered from %d to %d (used skills: %s)',
+            '%d: %s attacked %s with damage %d, %s\'s health lowered from %d to %d (%s)',
             $this->turnNumber,
             $this->attacker,
             $this->defender,
@@ -106,7 +101,7 @@ class GameTurnResult
             $this->defender,
             $this->defenderHealthBefore,
             $this->defenderHealthAfter,
-            implode(',', $this->usedSkills)
+            implode(', ', $this->notes),
         );
     }
 }
