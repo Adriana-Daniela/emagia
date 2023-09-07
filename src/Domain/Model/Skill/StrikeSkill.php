@@ -8,10 +8,7 @@ use Adriana\Emagia\Domain\Model\Result\GameTurnResult;
 
 class StrikeSkill extends AbstractSkill implements AttackSkillInterface
 {
-    public function isTriggered(): bool
-    {
-        return true;
-    }
+    protected int $usageProbability = 100;
 
     public function trigger(AbstractCharacter $attacker, AbstractCharacter $defender, int $damage, GameTurnResult $gameTurnResult): int
     {
@@ -20,9 +17,7 @@ class StrikeSkill extends AbstractSkill implements AttackSkillInterface
             return 0;
         }
 
-        $damage = $this->calculateDamage($attacker, $defender);
-
-        return $defender->defend($attacker, $damage, $gameTurnResult);
+        return $this->calculateDamage($attacker, $defender);
     }
 
     /**
