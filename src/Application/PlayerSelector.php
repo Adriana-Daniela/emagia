@@ -5,7 +5,7 @@ namespace Adriana\Emagia\Application;
 
 use Adriana\Emagia\Domain\Model\Player\AbstractCharacter;
 
-class PlayerSelector
+class PlayerSelector implements PlayerSelectorInterface
 {
     /**
      * @param AbstractCharacter $beast

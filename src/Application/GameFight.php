@@ -5,12 +5,13 @@ namespace Adriana\Emagia\Application;
 
 use Adriana\Emagia\Domain\Model\Player\AbstractCharacter;
 use Adriana\Emagia\Domain\Model\Result\GameResult;
-use Adriana\Emagia\Domain\Model\Result\GameTurnResult;
 
 class GameFight
 {
-    public function __construct(private readonly PlayerSelector $playerSelector)
-    {
+    public function __construct(
+        private readonly PlayerSelectorInterface $playerSelector,
+        private readonly GameRoundExecutor $gameRoundExecutor
+    ) {
     }
 
     private const HERO_WON = 'Hero won!';
@@ -24,24 +25,14 @@ class GameFight
         return $this->fightUntilGameOver($beastAttack, $hero, $beast, new GameResult());
     }
 
-    public function fightUntilGameOver(bool $beastAttack, AbstractCharacter $hero, AbstractCharacter $beast, GameResult $gameResult): GameResult
-    {
+    public function fightUntilGameOver(
+        bool $beastAttack,
+        AbstractCharacter $hero,
+        AbstractCharacter $beast,
+        GameResult $gameResult
+    ): GameResult {
         for ($turn = 1; $turn <= 20; $turn++) {
-            $turnResult = (new GameTurnResult())
-                ->setTurnNumber($turn)
-                ->setAttacker($beastAttack ? $beast->getName() : $hero->getName())
-                ->setDefender($beastAttack ? $hero->getName() : $beast->getName())
-                ->setDefenderHealthBefore($beastAttack ? $hero->getHealth() : $beast->getHealth());
-
-            if ($beastAttack) {
-                $beast->attack($hero, $turnResult);
-            } else {
-                $hero->attack($beast, $turnResult);
-            }
-
-            $turnResult->setDefenderHealthAfter($beastAttack ? $hero->getHealth() : $beast->getHealth());
-
-            $gameResult->addTurn($turnResult);
+            $gameResult->addTurn($this->gameRoundExecutor->executeRound($turn, $beastAttack, $beast, $hero));
 
             // switch roles
             $beastAttack = !$beastAttack;
