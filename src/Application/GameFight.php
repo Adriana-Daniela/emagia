@@ -9,13 +9,17 @@ use Adriana\Emagia\Domain\Model\Result\GameTurnResult;
 
 class GameFight
 {
+    public function __construct(private readonly PlayerSelector $playerSelector)
+    {
+    }
+
     private const HERO_WON = 'Hero won!';
 
     private const BEAST_WON = 'Beast won!';
 
     public function startFight(AbstractCharacter $hero, AbstractCharacter $beast): GameResult
     {
-        $beastAttack = $this->getFirstAttacker($beast, $hero);
+        $beastAttack = $this->playerSelector->getFirstAttacker($beast, $hero);
 
         return $this->fightUntilGameOver($beastAttack, $hero, $beast, new GameResult());
     }
@@ -56,25 +60,5 @@ class GameFight
         }
 
         return $gameResult->setWinner(self::HERO_WON);
-    }
-
-    /**
-     * @param AbstractCharacter $beast
-     * @param AbstractCharacter $hero
-     * @return bool
-     */
-    public function getFirstAttacker(AbstractCharacter $beast, AbstractCharacter $hero): bool
-    {
-        if ($beast->getSpeed() > $hero->getSpeed()) {
-            return true;
-        }
-
-        if ($beast->getSpeed() === $hero->getSpeed()) {
-            if ($beast->getLuck() > $hero->getLuck()) {
-                return true;
-            }
-        }
-
-        return false;
     }
 }
