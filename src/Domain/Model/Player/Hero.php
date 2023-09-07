@@ -5,6 +5,7 @@ namespace Adriana\Emagia\Domain\Model\Player;
 
 use Adriana\Emagia\Domain\Model\Skill\MagicShieldSkill;
 use Adriana\Emagia\Domain\Model\Skill\RapidStrikeSkill;
+use Adriana\Emagia\Domain\Model\Skill\StrikeSkill;
 
 class Hero extends AbstractCharacter
 {
@@ -17,6 +18,7 @@ class Hero extends AbstractCharacter
             ->setLuck(random_int(10, 30) / 100);
 
         $this->defenceSkills[] = new MagicShieldSkill();
+        $this->attackSkills[] = new StrikeSkill();
         $this->attackSkills[] = new RapidStrikeSkill();
     }
 

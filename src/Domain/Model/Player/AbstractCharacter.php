@@ -26,79 +26,32 @@ abstract class AbstractCharacter implements CharacterStatsInterface
     public function attack(AbstractCharacter $defender, GameTurnResult $gameTurnResult): void
     {
         foreach ($this->attackSkills as $attackSkill) {
-            if ($attackSkill->isTriggered()) {
-                $damage = $attackSkill->trigger($this, $defender, $this->calculateDamage($defender), $gameTurnResult);
-
-                $gameTurnResult->setUsedSkills($gameTurnResult->getUsedSkills() + [$attackSkill]);
-                $gameTurnResult->setDamage($gameTurnResult->getDamage() + $damage);
+            if (!$attackSkill->isTriggered()) {
+                continue;
             }
+
+            $damage = $attackSkill->trigger($this, $defender, 0, $gameTurnResult);
+
+            $gameTurnResult->addUsedSkill($attackSkill);
+
+            $defender->defend($this, $damage, $gameTurnResult);
         }
-
-        $damage = $this->executeAttack($defender, $gameTurnResult);
-
-        $gameTurnResult->setDamage($gameTurnResult->getDamage() + $damage);
-    }
-
-    /**
-     * @param AbstractCharacter $defender
-     * @param GameTurnResult $gameTurnResult
-     * @return int
-     * @throws \Exception
-     */
-    public function executeAttack(AbstractCharacter $defender, GameTurnResult $gameTurnResult): int
-    {
-        if ($this->attackFails($defender)) {
-            // no damage if lucky
-            return 0;
-        }
-
-        $damage = $this->calculateDamage($defender);
-
-        return $defender->defend($this, $damage, $gameTurnResult);
-    }
-
-    /**
-     * @param AbstractCharacter $defender
-     * @return bool
-     * @throws \Exception
-     */
-    private function attackFails(AbstractCharacter $defender): bool
-    {
-        $luckDistribution = array_fill(0, (int)($defender->getLuck() * 100), true);
-        $luckDistribution = array_merge(
-            $luckDistribution,
-            array_fill(
-                (int)($defender->getLuck() * 100) + 1,
-                100 - (int)($defender->getLuck() * 100),
-                false
-            )
-        );
-
-        $luckIndex = random_int(0, 99);
-
-        return $luckDistribution[$luckIndex];
-    }
-
-    /**
-     * @param AbstractCharacter $defender
-     * @return int
-     */
-    private function calculateDamage(AbstractCharacter $defender): int
-    {
-        return $this->getStrength() - $defender->getDefence();
     }
 
     public function defend(AbstractCharacter $attacker, int $damage, GameTurnResult $gameTurnResult): int
     {
         foreach ($this->defenceSkills as $defenceSkill) {
-            if ($defenceSkill->isTriggered()) {
-                $damage = $defenceSkill->trigger($attacker, $this, $damage, $gameTurnResult);
-
-                $gameTurnResult->setUsedSkills($gameTurnResult->getUsedSkills() + [$defenceSkill]);
+            if (!$defenceSkill->isTriggered()) {
+                continue;
             }
+
+            $damage = $defenceSkill->trigger($attacker, $this, $damage, $gameTurnResult);
+
+            $gameTurnResult->addUsedSkill($defenceSkill);
         }
 
         $this->setHealth($this->getHealth() - $damage);
+        $gameTurnResult->addDamage($damage);
 
         return $damage;
     }

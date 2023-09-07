@@ -18,10 +18,8 @@ class PlayerSelector implements PlayerSelectorInterface
             return true;
         }
 
-        if ($beast->getSpeed() === $hero->getSpeed()) {
-            if ($beast->getLuck() > $hero->getLuck()) {
-                return true;
-            }
+        if (($beast->getSpeed() === $hero->getSpeed()) && $beast->getLuck() > $hero->getLuck()) {
+            return true;
         }
 
         return false;

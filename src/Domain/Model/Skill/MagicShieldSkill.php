@@ -6,7 +6,7 @@ namespace Adriana\Emagia\Domain\Model\Skill;
 use Adriana\Emagia\Domain\Model\Player\AbstractCharacter;
 use Adriana\Emagia\Domain\Model\Result\GameTurnResult;
 
-class MagicShieldSkill extends AbstractSkill
+class MagicShieldSkill extends AbstractSkill implements DefenceSkillInterface
 {
     protected int $usageProbability = 20;
 

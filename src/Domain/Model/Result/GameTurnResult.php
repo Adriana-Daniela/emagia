@@ -52,39 +52,23 @@ class GameTurnResult
     }
 
     /**
-     * @return array
-     */
-    public function getUsedSkills(): array
-    {
-        return $this->usedSkills;
-    }
-
-    /**
-     * @param array $usedSkills
+     * @param SkillInterface $usedSkill
      * @return GameTurnResult
      */
-    public function setUsedSkills(array $usedSkills): GameTurnResult
+    public function addUsedSkill(SkillInterface $usedSkill): GameTurnResult
     {
-        $this->usedSkills = $usedSkills;
+        $this->usedSkills[] = $usedSkill;
 
         return $this;
-    }
-
-    /**
-     * @return int
-     */
-    public function getDamage(): int
-    {
-        return $this->damage;
     }
 
     /**
      * @param int $damage
      * @return GameTurnResult
      */
-    public function setDamage(int $damage): GameTurnResult
+    public function addDamage(int $damage): GameTurnResult
     {
-        $this->damage = $damage;
+        $this->damage += $damage;
 
         return $this;
     }

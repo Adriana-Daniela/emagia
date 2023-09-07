@@ -32,10 +32,10 @@ class GameFight
         GameResult $gameResult
     ): GameResult {
         for ($turn = 1; $turn <= 20; $turn++) {
-            $gameResult->addTurn($this->gameRoundExecutor->executeRound($turn, $beastAttack, $beast, $hero));
 
-            // switch roles
-            $beastAttack = !$beastAttack;
+            $turnResult = $this->gameRoundExecutor->executeRound($turn, $beastAttack, $beast, $hero);
+
+            $gameResult->addTurn($turnResult);
 
             if ($beast->getHealth() === 0) {
                 return $gameResult->setWinner(self::HERO_WON);
@@ -44,6 +44,9 @@ class GameFight
             if ($hero->getHealth() === 0) {
                 return $gameResult->setWinner(self::BEAST_WON);
             }
+
+            // switch roles
+            $beastAttack = !$beastAttack;
         }
 
         if ($beast->getHealth() > $hero->getHealth()) {

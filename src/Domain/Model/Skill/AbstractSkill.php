@@ -13,7 +13,7 @@ abstract class AbstractSkill implements SkillInterface
         $luckDistribution = array_merge(
             $luckDistribution,
             array_fill(
-                $this->usageProbability + 1,
+                $this->usageProbability,
                 100 - $this->usageProbability,
                 false
             )
