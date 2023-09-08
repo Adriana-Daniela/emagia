@@ -8,7 +8,11 @@
   },
   "autoload": {
     "psr-4": {
-      "Adriana\\Emagia\\": "src/"
+      "Adriana\\Emagia\\": "src/",
+      "Adriana\\Emagia\\Tests\\": "tests/"
     }
+  },
+  "require-dev": {
+    "phpunit/phpunit": "^10.3"
   }
 }
