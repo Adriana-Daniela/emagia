@@ -5,7 +5,13 @@ namespace Adriana\Emagia\Domain\Model\Skill;
 
 class RapidStrikeSkill extends StrikeSkill
 {
-    protected int $usageProbability = 10;
+    protected int $usageProbability;
+
+    public function __construct($usageProbability = 10)
+    {
+        $this->usageProbability = $usageProbability;
+        parent::__construct($this->usageProbability);
+    }
 
     public function __toString(): string
     {
