@@ -4,7 +4,6 @@ declare(strict_types=1);
 namespace Adriana\Emagia\Domain\Model\Player;
 
 use Adriana\Emagia\Domain\Model\Skill\MagicShieldSkill;
-use Adriana\Emagia\Domain\Model\Skill\MagicShieldSkillWithOutput;
 use Adriana\Emagia\Domain\Model\Skill\RapidStrikeSkill;
 use Adriana\Emagia\Domain\Model\Skill\StrikeSkill;
 

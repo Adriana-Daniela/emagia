@@ -5,7 +5,12 @@ namespace Adriana\Emagia\Domain\Model\Skill;
 
 abstract class AbstractSkill implements SkillInterface
 {
-    protected int $usageProbability = 0;
+    protected int $usageProbability;
+
+    public function __construct($usageProbability = 0)
+    {
+        $this->usageProbability = $usageProbability;
+    }
 
     public function isTriggered(): bool
     {

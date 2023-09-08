@@ -23,6 +23,11 @@ abstract class AbstractCharacter implements CharacterStatsInterface
 
     abstract public function getName(): string;
 
+    /**
+     * @param AbstractCharacter $defender
+     * @param GameTurnResult $gameTurnResult
+     * @return void
+     */
     public function attack(AbstractCharacter $defender, GameTurnResult $gameTurnResult): void
     {
         foreach ($this->attackSkills as $attackSkill) {
@@ -40,6 +45,12 @@ abstract class AbstractCharacter implements CharacterStatsInterface
         }
     }
 
+    /**
+     * @param AbstractCharacter $attacker
+     * @param int $damage
+     * @param GameTurnResult $gameTurnResult
+     * @return int
+     */
     public function defend(AbstractCharacter $attacker, int $damage, GameTurnResult $gameTurnResult): int
     {
         foreach ($this->defenceSkills as $defenceSkill) {

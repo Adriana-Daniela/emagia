@@ -13,7 +13,6 @@ class GameFight
         private readonly GameRoundExecutor $gameRoundExecutor
     ) {
     }
-
     private const HERO_WON = 'Hero won!';
 
     private const BEAST_WON = 'Beast won!';
@@ -32,7 +31,6 @@ class GameFight
         GameResult $gameResult
     ): GameResult {
         for ($turn = 1; $turn <= 20; $turn++) {
-
             $turnResult = $this->gameRoundExecutor->executeRound($turn, $beastAttack, $beast, $hero);
 
             $gameResult->addTurn($turnResult);
