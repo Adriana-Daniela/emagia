@@ -1,8 +1,7 @@
-# eMagia
+# Fantasy Game
 
 ## Documentation
-This is a sample of a fantasy game played by a hero and a beast in the ever-green forests of Emagia.
-More details of the game rules can be found in the attached .pdf file.
+This is a sample of a fantasy game played by a hero and a beast in the ever-green imaginary forests of your dreams.
 
 ## Quickstart Installation
 
