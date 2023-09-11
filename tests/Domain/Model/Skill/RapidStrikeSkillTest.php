@@ -49,7 +49,7 @@ class RapidStrikeSkillTest extends TestCase
                     ->setStrength(70)
                     ->setDefence(50),
                 'defender' => (new Hero())
-                    ->setLuck(0.9)
+                    ->setLuck(1)
                     ->setStrength(60)
                     ->setDefence(50),
             ],
