@@ -30,7 +30,7 @@ class MagicShieldSkillTest extends TestCase
         int $originalDamage,
     ): void
     {
-        $magicShieldSkill = new MagicShieldSkill();
+        $magicShieldSkill = new MagicShieldSkill(100);
 
         $actualDefenceResult = $magicShieldSkill->trigger($attacker, $defender, $originalDamage);
 
@@ -60,6 +60,12 @@ class MagicShieldSkillTest extends TestCase
                 'attacker' => new Beast(),
                 'defender' => new Hero(),
                 'originalDamage' => 1,
+            ],
+            'Magic shield skill with 0 original damage' => [
+                'expectedDamage' => 0,
+                'attacker' => new Beast(),
+                'defender' => new Hero(),
+                'originalDamage' => 0,
             ],
         ];
     }

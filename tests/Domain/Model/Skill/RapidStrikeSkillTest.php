@@ -29,7 +29,7 @@ class RapidStrikeSkillTest extends TestCase
         AbstractCharacter $defender
     ): void
     {
-        $rapidStrikeSkill = new RapidStrikeSkill();
+        $rapidStrikeSkill = new RapidStrikeSkill(100);
 
         $actualAttackResult = $rapidStrikeSkill->trigger($attacker, $defender);
 
@@ -45,7 +45,7 @@ class RapidStrikeSkillTest extends TestCase
             'defender\'s health is not damaged if he gets lucky' => [
                 'expectedDamage' => 0,
                 'attacker' => (new Beast())
-                    ->setLuck(0.1)
+                    ->setLuck(0)
                     ->setStrength(70)
                     ->setDefence(50),
                 'defender' => (new Hero())
@@ -53,10 +53,32 @@ class RapidStrikeSkillTest extends TestCase
                     ->setStrength(60)
                     ->setDefence(50),
             ],
-            'defender\'s health is damaged twice' => [
+            'attacker\'s luck does not influence defender\'s health if defender is also lucky' => [
                 'expectedDamage' => 0,
                 'attacker' => (new Beast())
                     ->setLuck(1)
+                    ->setStrength(70)
+                    ->setDefence(50),
+                'defender' => (new Hero())
+                    ->setLuck(1)
+                    ->setStrength(60)
+                    ->setDefence(50),
+            ],
+            'defender\'s health is reduced if defender\'s unlucky' => [
+                'expectedDamage' => 20,
+                'attacker' => (new Beast())
+                    ->setLuck(1)
+                    ->setStrength(70)
+                    ->setDefence(50),
+                'defender' => (new Hero())
+                    ->setLuck(0)
+                    ->setStrength(60)
+                    ->setDefence(50),
+            ],
+            'attacker is not lucky but defender\'s health is reduced if defender is unlucky' => [
+                'expectedDamage' => 20,
+                'attacker' => (new Beast())
+                    ->setLuck(0)
                     ->setStrength(70)
                     ->setDefence(50),
                 'defender' => (new Hero())
