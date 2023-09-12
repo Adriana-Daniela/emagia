@@ -53,6 +53,17 @@ class RapidStrikeSkillTest extends TestCase
                     ->setStrength(60)
                     ->setDefence(50),
             ],
+            'defender\'s health is damaged twice' => [
+                'expectedDamage' => 0,
+                'attacker' => (new Beast())
+                    ->setLuck(1)
+                    ->setStrength(70)
+                    ->setDefence(50),
+                'defender' => (new Hero())
+                    ->setLuck(0)
+                    ->setStrength(60)
+                    ->setDefence(50),
+            ],
         ];
     }
 

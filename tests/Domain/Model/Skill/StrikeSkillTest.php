@@ -45,7 +45,7 @@ class StrikeSkillTest extends TestCase
             'defender\'s health is damaged if attacker gets lucky' => [
                 'expectedDamage' => 20,
                 'attacker' => (new Beast())
-                    ->setLuck(0.9)
+                    ->setLuck(1)
                     ->setStrength(70)
                     ->setDefence(50),
                 'defender' => (new Hero())
