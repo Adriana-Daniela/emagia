@@ -8,12 +8,9 @@ use Adriana\Emagia\Domain\Model\Result\AttackResult;
 
 class StrikeSkill extends AbstractSkill implements AttackSkillInterface
 {
-    protected int $usageProbability;
-
-    public function __construct($usageProbability = 100)
+    public function __construct(int $usageProbability = 100)
     {
-        $this->usageProbability = $usageProbability;
-        parent::__construct($this->usageProbability);
+        parent::__construct($usageProbability);
     }
 
     public function trigger(AbstractCharacter $attacker, AbstractCharacter $defender): AttackResult

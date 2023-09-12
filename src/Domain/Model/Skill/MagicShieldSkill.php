@@ -8,12 +8,9 @@ use Adriana\Emagia\Domain\Model\Result\DefenceResult;
 
 class MagicShieldSkill extends AbstractSkill implements DefenceSkillInterface
 {
-    protected int $usageProbability;
-
-    public function __construct($usageProbability = 20)
+    public function __construct(int $usageProbability = 20)
     {
-        $this->usageProbability = $usageProbability;
-        parent::__construct($this->usageProbability);
+        parent::__construct($usageProbability);
     }
 
     public function trigger(AbstractCharacter $attacker, AbstractCharacter $defender, int $damage): DefenceResult

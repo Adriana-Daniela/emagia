@@ -7,7 +7,7 @@ abstract class AbstractSkill implements SkillInterface
 {
     protected int $usageProbability;
 
-    public function __construct($usageProbability = 0)
+    public function __construct(int $usageProbability = 0)
     {
         $this->usageProbability = $usageProbability;
     }
