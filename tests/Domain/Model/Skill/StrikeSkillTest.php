@@ -86,6 +86,39 @@ class StrikeSkillTest extends TestCase
                     ->setStrength(60)
                     ->setDefence(50),
             ],
+            '1. damage is based on strength and defence' => [
+                'expectedDamage' => 25,
+                'attacker' => (new Beast())
+                    ->setLuck(1)
+                    ->setStrength(75)
+                    ->setDefence(50),
+                'defender' => (new Hero())
+                    ->setLuck(0)
+                    ->setStrength(60)
+                    ->setDefence(50),
+            ],
+            '2. damage is based on strength and defence' => [
+                'expectedDamage' => 22,
+                'attacker' => (new Beast())
+                    ->setLuck(1)
+                    ->setStrength(73)
+                    ->setDefence(50),
+                'defender' => (new Hero())
+                    ->setLuck(0)
+                    ->setStrength(60)
+                    ->setDefence(51),
+            ],
+            'strength is lower than defence' => [
+                'expectedDamage' => 0,
+                'attacker' => (new Beast())
+                    ->setLuck(1)
+                    ->setStrength(20)
+                    ->setDefence(50),
+                'defender' => (new Hero())
+                    ->setLuck(0)
+                    ->setStrength(60)
+                    ->setDefence(81),
+            ],
         ];
     }
 
