@@ -64,7 +64,7 @@ abstract class AbstractCharacter implements CharacterStatsInterface
             $gameTurnResult->addNote($defenceResult->getNote());
         }
 
-        $this->setHealth($this->getHealth() - $damage);
+        $this->setHealth(max(0, $this->getHealth() - $damage));
 
         $gameTurnResult->addDamage($damage);
 

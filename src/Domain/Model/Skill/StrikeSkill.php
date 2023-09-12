@@ -68,7 +68,7 @@ class StrikeSkill extends AbstractSkill implements AttackSkillInterface
      */
     private function calculateDamage(AbstractCharacter $attacker, AbstractCharacter $defender): int
     {
-        return $attacker->getStrength() - $defender->getDefence();
+        return max(0, $attacker->getStrength() - $defender->getDefence());
     }
 
     public function __toString(): string
